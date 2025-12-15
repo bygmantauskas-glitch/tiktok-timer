@@ -22,11 +22,11 @@
 </head>
 <body>
     <div id="timer">00:00</div>
-    <button id="addCoin">1 Coin (+15 sek)</button>
+    <button id="addCoin">1 Coin</button>
 
     <script>
-        let timeInSeconds = 0;
-        let timerRunning = false;
+        let timeInSeconds = 0;       // dabartinis laikas
+        let timerRunning = false;    // ar laikmatis veikia
         let intervalId;
 
         function formatTime(seconds) {
@@ -55,12 +55,12 @@
         }
 
         document.getElementById('addCoin').addEventListener('click', () => {
-            timeInSeconds += 15; // pridėti 15 sek
-            updateTimer();
-            startTimer();
+            timeInSeconds += 15; // pridėti 15 sekundių
+            updateTimer();        // atnaujinti rodomą laiką
+            startTimer();         // paleisti laikmatį, jei jis nebuvo paleistas
         });
 
-        updateTimer();
+        updateTimer(); // pradinis atnaujinimas
     </script>
 </body>
 </html>
