@@ -1,53 +1,53 @@
 <!DOCTYPE html>
 <html lang="lt">
 <head>
-    <meta charset="UTF-8">
-    <title>Laikmatis</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-        }
-        #timer {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-        button {
-            font-size: 18px;
-            padding: 10px 20px;
-            margin: 5px;
-            cursor: pointer;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>TikTok Coins Timer</title>
+<style>
+body {
+    background: transparent;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+#timer {
+    font-size: 60px;
+}
+</style>
 </head>
 <body>
 
-    <h1>Laikmatis</h1>
-    <div id="timer">0 s</div>
+<div id="timer">0 s</div>
 
-    <button onclick="addCoins()">Coins (+15s)</button>
-    <button onclick="addSub()">Subscribe (+200s)</button>
+<script>
+let time = 0;
+let running = false;
+let interval = null;
 
-    <script>
-        let time = 0;
-
-        // Laikmatis skaičiuoja laiką
-        setInterval(() => {
+// Paleidžia laiką tik vieną kartą
+function startTimer() {
+    if (!running) {
+        running = true;
+        interval = setInterval(() => {
             time++;
             document.getElementById("timer").innerText = time + " s";
         }, 1000);
+    }
+}
 
-        // Coins +15 sekundžių
-        function addCoins() {
-            time += 15;
-        }
+// ŠI FUNKCIJA KVIEČIAMA KAI ATEINA COINS
+function addCoins() {
+    time += 15;
+    document.getElementById("timer").innerText = time + " s";
+    startTimer();
+}
 
-        // Subscribe +200 sekundžių
-        function addSub() {
-            time += 200;
-        }
-    </script>
+/*
+  TikTok Live Studio / TikFinity / Streamer.bot
+  turi iškviesti:
+  addCoins();
+*/
+</script>
 
 </body>
 </html>
