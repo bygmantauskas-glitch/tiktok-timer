@@ -22,7 +22,7 @@
     <script>
         let timeInSeconds = 0;       // dabartinis laikas
         let timerRunning = false;    // ar laikmatis veikia
-        let intervalId;
+        let intervalId = null;       // intervalo ID
 
         function formatTime(seconds) {
             const mins = Math.floor(seconds / 60);
@@ -49,9 +49,9 @@
             }
         }
 
-        // Simuliuojame coin įmetimą slaptai: paspaudus bet kur ekrane
+        // Paspaudus bet kur ekrane, pridedama 15 sek. ir startuojamas laikmatis
         document.body.addEventListener('click', () => {
-            timeInSeconds += 15; // pridėti 15 sek
+            timeInSeconds += 15; // pridėti 15 sek.
             updateTimer();
             startTimer();
         });
