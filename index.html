@@ -2,51 +2,58 @@
 <html lang="lt">
 <head>
 <meta charset="UTF-8">
-<title>TikTok Coins Timer</title>
+<title>Coin Timer</title>
 <style>
-body {
-    background: transparent;
-    color: white;
-    font-family: Arial, sans-serif;
+  body {
+    font-family: Arial;
     text-align: center;
-}
-#timer {
-    font-size: 60px;
-}
+    margin-top: 50px;
+  }
+  #time {
+    font-size: 40px;
+    margin: 20px;
+  }
+  button {
+    font-size: 20px;
+    padding: 10px 20px;
+  }
 </style>
 </head>
 <body>
 
-<div id="timer">0 s</div>
+<h1>Laikmatis su coin</h1>
+
+<div id="time">0</div>
+
+<button onclick="insertCoin()">Įmesti Coin</button>
 
 <script>
-let time = 0;
-let running = false;
-let interval = null;
+let timeLeft = 0;
+let timer = null;
 
-// Paleidžia laiką tik vieną kartą
-function startTimer() {
-    if (!running) {
-        running = true;
-        interval = setInterval(() => {
-            time++;
-            document.getElementById("timer").innerText = time + " s";
-        }, 1000);
-    }
+function insertCoin() {
+  timeLeft += 15; // +15 sekundžių už coin
+  updateDisplay();
+
+  // Jei laikmatis dar neveikia – paleidžiam
+  if (timer === null) {
+    timer = setInterval(countDown, 1000);
+  }
 }
 
-// ŠI FUNKCIJA KVIEČIAMA KAI ATEINA COINS
-function addCoins() {
-    time += 15;
-    document.getElementById("timer").innerText = time + " s";
-    startTimer();
+function countDown() {
+  if (timeLeft > 0) {
+    timeLeft--;
+    updateDisplay();
+  } else {
+    clearInterval(timer);
+    timer = null;
+  }
 }
 
-/*
-  TikTok Live Studio / TikFinity / Streamer.bot
-  turi iškviesti:
-  addCoins();
-*/
+function updateDisplay() {
+  document.getElementById("time").textContent = timeLeft;
+}
 </script>
 
 </body>
