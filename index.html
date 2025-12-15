@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atgalinis laikmatis</title>
+    <title>Atgalinis laikmatis su monetomis</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -21,7 +21,6 @@
 
     <script>
         let timeInSeconds = 0;       // dabartinis laikas
-        let timerRunning = false;    // ar laikmatis veikia
         let intervalId = null;       // intervalo ID
 
         function formatTime(seconds) {
@@ -35,15 +34,14 @@
         }
 
         function startTimer() {
-            if (!timerRunning) {
-                timerRunning = true;
+            if (intervalId === null) {
                 intervalId = setInterval(() => {
                     if (timeInSeconds > 0) {
                         timeInSeconds--;
                         updateTimer();
                     } else {
                         clearInterval(intervalId);
-                        timerRunning = false;
+                        intervalId = null; // leidžia paleisti laikmatį vėl, kai įmetama coin
                     }
                 }, 1000);
             }
@@ -53,7 +51,7 @@
         document.body.addEventListener('click', () => {
             timeInSeconds += 15; // pridėti 15 sek.
             updateTimer();
-            startTimer();
+            startTimer(); // jei laikmatis jau veikia, tiesiog tęsiamas
         });
 
         updateTimer(); // pradinis atnaujinimas
