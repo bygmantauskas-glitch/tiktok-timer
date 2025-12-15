@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laikmatis su monetomis</title>
+    <title>Atgalinis laikmatis su monetomis</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -39,22 +39,28 @@
             document.getElementById('timer').textContent = formatTime(timeInSeconds);
         }
 
-        document.getElementById('addCoin').addEventListener('click', () => {
-            timeInSeconds += 15; // Pridedam 15 sek
-            updateTimer();
-
+        function startTimer() {
             if (!timerRunning) {
                 timerRunning = true;
                 intervalId = setInterval(() => {
-                    timeInSeconds++;
-                    updateTimer();
+                    if (timeInSeconds > 0) {
+                        timeInSeconds--;
+                        updateTimer();
+                    } else {
+                        clearInterval(intervalId);
+                        timerRunning = false;
+                    }
                 }, 1000);
             }
+        }
+
+        document.getElementById('addCoin').addEventListener('click', () => {
+            timeInSeconds += 15; // pridėti 15 sek
+            updateTimer();
+            startTimer();
         });
 
-        // Pradinis atnaujinimas
         updateTimer();
     </script>
 </body>
 </html>
-
