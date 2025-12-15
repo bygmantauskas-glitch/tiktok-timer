@@ -1,60 +1,60 @@
 <!DOCTYPE html>
 <html lang="lt">
 <head>
-<meta charset="UTF-8">
-<title>Coin Timer</title>
-<style>
-  body {
-    font-family: Arial;
-    text-align: center;
-    margin-top: 50px;
-  }
-  #time {
-    font-size: 40px;
-    margin: 20px;
-  }
-  button {
-    font-size: 20px;
-    padding: 10px 20px;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laikmatis su monetomis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #timer {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        button {
+            font-size: 24px;
+            padding: 10px 20px;
+        }
+    </style>
 </head>
 <body>
+    <div id="timer">00:00</div>
+    <button id="addCoin">1 Coin (+15 sek)</button>
 
-<h1>Laikmatis su coin</h1>
+    <script>
+        let timeInSeconds = 0;
+        let timerRunning = false;
+        let intervalId;
 
-<div id="time">0</div>
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
 
-<button onclick="insertCoin()">Įmesti Coin</button>
+        function updateTimer() {
+            document.getElementById('timer').textContent = formatTime(timeInSeconds);
+        }
 
-<script>
-let timeLeft = 0;
-let timer = null;
+        document.getElementById('addCoin').addEventListener('click', () => {
+            timeInSeconds += 15; // Pridedam 15 sek
+            updateTimer();
 
-function insertCoin() {
-  timeLeft += 15; // +15 sekundžių už coin
-  updateDisplay();
+            if (!timerRunning) {
+                timerRunning = true;
+                intervalId = setInterval(() => {
+                    timeInSeconds++;
+                    updateTimer();
+                }, 1000);
+            }
+        });
 
-  // Jei laikmatis dar neveikia – paleidžiam
-  if (timer === null) {
-    timer = setInterval(countDown, 1000);
-  }
-}
-
-function countDown() {
-  if (timeLeft > 0) {
-    timeLeft--;
-    updateDisplay();
-  } else {
-    clearInterval(timer);
-    timer = null;
-  }
-}
-
-function updateDisplay() {
-  document.getElementById("time").textContent = timeLeft;
-}
-</script>
-
+        // Pradinis atnaujinimas
+        updateTimer();
+    </script>
 </body>
 </html>
+
