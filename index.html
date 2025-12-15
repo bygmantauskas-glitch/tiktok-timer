@@ -20,8 +20,8 @@
     <div id="timer">00:00</div>
 
     <script>
-        let timeInSeconds = 0;
-        let timerRunning = false;
+        let timeInSeconds = 0;       // dabartinis laikas
+        let timerRunning = false;    // ar laikmatis veikia
         let intervalId;
 
         function formatTime(seconds) {
@@ -49,14 +49,14 @@
             }
         }
 
-        // Simuliuojame „coin“ paspaudimą visame ekrane
+        // Simuliuojame coin įmetimą slaptai: paspaudus bet kur ekrane
         document.body.addEventListener('click', () => {
             timeInSeconds += 15; // pridėti 15 sek
             updateTimer();
             startTimer();
         });
 
-        updateTimer();
+        updateTimer(); // pradinis atnaujinimas
     </script>
 </body>
 </html>
