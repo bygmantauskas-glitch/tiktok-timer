@@ -3,36 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atgalinis laikmatis su monetomis</title>
+    <title>Atgalinis laikmatis</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             margin-top: 50px;
+            cursor: pointer; /* paspaudimas bet kur ekrane */
         }
         #timer {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-        button {
-            font-size: 24px;
-            padding: 10px 20px;
+            font-size: 60px;
         }
     </style>
 </head>
 <body>
     <div id="timer">00:00</div>
-    <button id="addCoin">1 Coin</button>
 
     <script>
-        let timeInSeconds = 0;       // dabartinis laikas
-        let timerRunning = false;    // ar laikmatis veikia
+        let timeInSeconds = 0;
+        let timerRunning = false;
         let intervalId;
 
         function formatTime(seconds) {
             const mins = Math.floor(seconds / 60);
             const secs = seconds % 60;
-            return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+            return `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
         }
 
         function updateTimer() {
@@ -54,13 +49,14 @@
             }
         }
 
-        document.getElementById('addCoin').addEventListener('click', () => {
-            timeInSeconds += 15; // pridėti 15 sekundių
-            updateTimer();        // atnaujinti rodomą laiką
-            startTimer();         // paleisti laikmatį, jei jis nebuvo paleistas
+        // Simuliuojame „coin“ paspaudimą visame ekrane
+        document.body.addEventListener('click', () => {
+            timeInSeconds += 15; // pridėti 15 sek
+            updateTimer();
+            startTimer();
         });
 
-        updateTimer(); // pradinis atnaujinimas
+        updateTimer();
     </script>
 </body>
 </html>
