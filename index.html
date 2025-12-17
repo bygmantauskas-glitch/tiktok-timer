@@ -2,24 +2,8 @@
 <html lang="lt">
 <head>
 <meta charset="UTF-8">
-<title>Countdown su monetomis</title>
-<style>
-  body { 
-    font-family: Arial, sans-serif; 
-    text-align: center; 
-    margin-top: 50px; 
-    background-color: #111; 
-    color: #fff; 
-  }
-  #timer { font-size: 60px; margin-bottom: 20px; }
-  #coins { font-size: 30px; }
-  button { 
-    padding: 10px 20px; 
-    font-size: 18px; 
-    margin-top: 20px; 
-    cursor: pointer; 
-  }
-</style>
+<title>Countdown su Monetomis</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -35,7 +19,7 @@ let timerInterval = null;
 let timerElement = document.getElementById('timer');
 let coinsElement = document.getElementById('coins');
 
-// Funkcija startuoti countdown
+// start countdown jei dar nesikuria
 function startCountdown() {
     if (!timerInterval) {
         timerInterval = setInterval(() => {
@@ -43,21 +27,21 @@ function startCountdown() {
                 time--;
                 timerElement.textContent = time;
             } else {
-                timerElement.textContent = "0"; // nebūna neigiamo
+                timerElement.textContent = "0";
             }
         }, 1000);
     }
 }
 
-// Mygtukas įdėti monetą
+// mygtukas įdėti monetą
 document.getElementById('addCoin').addEventListener('click', () => {
     coins++;
     coinsElement.textContent = coins;
 
-    time += 5;  // prideda 5 sekundes prie likusio laiko
+    time += 5; // pridėti +5 sekundes
     timerElement.textContent = time;
 
-    startCountdown(); // startuoja countdown jei dar nebuvo startavęs
+    startCountdown();
 });
 </script>
 
