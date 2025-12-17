@@ -3,38 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atgalinis laikmatis su coin boost</title>
+    <title>Automatinis laikmatis su coin</title>
     <style>
         body {
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
             font-family: Arial, sans-serif;
             background-color: #222;
             color: #fff;
+            font-size: 4rem;
+            user-select: none;
         }
         #timer {
-            font-size: 4rem;
-            margin-bottom: 20px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 1.2rem;
-            cursor: pointer;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
     <div id="timer">00:00</div>
-    <button id="addCoin">Gauti coin (pridėti 5 s)</button>
 
     <script>
-        // Pradinis laikmatis sekundėmis
-        let timeLeft = 0; // 0 sekundžių
+        let timeLeft = 0; // startas nuo 0 sekundžių
         const timerElement = document.getElementById('timer');
-        const addCoinButton = document.getElementById('addCoin');
 
         function updateTimerDisplay() {
             const minutes = Math.floor(timeLeft / 60).toString().padStart(2, '0');
@@ -42,25 +34,31 @@
             timerElement.textContent = `${minutes}:${seconds}`;
         }
 
-        // Atgalinis laikmatis
-        const timerInterval = setInterval(() => {
-            if(timeLeft > 0) {
+        // Funkcija, kuri prideda 5 sekundes laikui (imitacija coin)
+        function addCoin() {
+            timeLeft += 5;
+            updateTimerDisplay();
+        }
+
+        // Automatinis coin pridėjimas atsitiktiniais intervalais (pvz. 5–15 sekundžių)
+        function scheduleCoin() {
+            const randomDelay = Math.floor(Math.random() * 10000) + 5000; // 5000–15000 ms
+            setTimeout(() => {
+                addCoin();
+                scheduleCoin(); // suplanuoja kitą coin
+            }, randomDelay);
+        }
+
+        // Laikmatis, kuris eina atgal
+        setInterval(() => {
+            if (timeLeft > 0) {
                 timeLeft--;
                 updateTimerDisplay();
-            } else {
-                clearInterval(timerInterval);
-                alert("Laikas baigėsi!");
             }
         }, 1000);
 
-        // Mygtukas imituoja coin gavimą
-        addCoinButton.addEventListener('click', () => {
-            timeLeft += 5; // Prideda 5 sekundes
-            updateTimerDisplay();
-        });
-
-        // Inicializacija
-        updateTimerDisplay();
+        scheduleCoin(); // pradėti automatinius coin
+        updateTimerDisplay(); // pradinis rodymas
     </script>
 </body>
 </html>
