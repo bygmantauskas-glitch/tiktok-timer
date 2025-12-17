@@ -1,60 +1,65 @@
 <!DOCTYPE html>
 <html lang="lt">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atgalinis laikmatis su monetomis</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-            cursor: pointer; /* paspaudimas bet kur ekrane */
-        }
-        #timer {
-            font-size: 60px;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Countdown su monetomis</title>
+<style>
+  body { 
+    font-family: Arial, sans-serif; 
+    text-align: center; 
+    margin-top: 50px; 
+    background-color: #111; 
+    color: #fff; 
+  }
+  #timer { font-size: 60px; margin-bottom: 20px; }
+  #coins { font-size: 30px; }
+  button { 
+    padding: 10px 20px; 
+    font-size: 18px; 
+    margin-top: 20px; 
+    cursor: pointer; 
+  }
+</style>
 </head>
 <body>
-    <div id="timer">00:00</div>
 
-    <script>
-        let timeInSeconds = 0;       // dabartinis laikas
-        let intervalId = null;       // intervalo ID
+<h1 id="timer">0</h1>
+<h2>Monetos: <span id="coins">0</span></h2>
+<button id="addCoin">Įdėti 1 Monetą → +5 Sekundžių</button>
 
-        function formatTime(seconds) {
-            const mins = Math.floor(seconds / 60);
-            const secs = seconds % 60;
-            return `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
-        }
+<script>
+let time = 0;        // likęs laikas sekundėmis
+let coins = 0;       // monetų skaičius
+let timerInterval = null;
 
-        function updateTimer() {
-            document.getElementById('timer').textContent = formatTime(timeInSeconds);
-        }
+let timerElement = document.getElementById('timer');
+let coinsElement = document.getElementById('coins');
 
-        function startTimer() {
-            if (intervalId === null) {
-                intervalId = setInterval(() => {
-                    if (timeInSeconds > 0) {
-                        timeInSeconds--;
-                        updateTimer();
-                    } else {
-                        clearInterval(intervalId);
-                        intervalId = null; // leidžia paleisti laikmatį vėl, kai įmetama coin
-                    }
-                }, 1000);
+// Funkcija startuoti countdown
+function startCountdown() {
+    if (!timerInterval) {
+        timerInterval = setInterval(() => {
+            if (time > 0) {
+                time--;
+                timerElement.textContent = time;
+            } else {
+                timerElement.textContent = "0"; // nebūna neigiamo
             }
-        }
+        }, 1000);
+    }
+}
 
-        // Paspaudus bet kur ekrane, pridedama 15 sek. ir startuojamas laikmatis
-        document.body.addEventListener('click', () => {
-            timeInSeconds += 15; // pridėti 15 sek.
-            updateTimer();
-            startTimer(); // jei laikmatis jau veikia, tiesiog tęsiamas
-        });
+// Mygtukas įdėti monetą
+document.getElementById('addCoin').addEventListener('click', () => {
+    coins++;
+    coinsElement.textContent = coins;
 
-        updateTimer(); // pradinis atnaujinimas
-    </script>
+    time += 5;  // prideda 5 sekundes prie likusio laiko
+    timerElement.textContent = time;
+
+    startCountdown(); // startuoja countdown jei dar nebuvo startavęs
+});
+</script>
+
 </body>
 </html>
